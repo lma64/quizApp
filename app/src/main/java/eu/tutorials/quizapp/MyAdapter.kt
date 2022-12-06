@@ -14,10 +14,8 @@ class MyAdapter(private  val userList : ArrayList<User>): RecyclerView.Adapter<M
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-
-        val sortedList = userList.sortedByDescending { it.Score }
-        val currentitem = sortedList[position-1]
-
+        val sortedList = userList.sortedByDescending { Integer.parseInt(it.Score) }
+        val currentitem = sortedList[position]
 
         holder.name.text = currentitem.Name
         holder.score.text = currentitem.Score

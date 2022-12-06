@@ -11,7 +11,7 @@ import androidx.core.content.ContextCompat
 
 class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
     //create variables for each view in the layout
-    private var numbQuestions = 14;
+    private var numbQuestions = 10;
     private var progressBar:ProgressBar?=null
     private var tvProgress: TextView? = null
     private var tvQuestion:TextView? = null
@@ -31,6 +31,14 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quiz_questions)
+
+        val backToMain:Button = findViewById(R.id.btn_menu)
+
+        backToMain.setOnClickListener {
+            val intent = Intent(this@QuizQuestionsActivity, Categories::class.java)
+            startActivity(intent)
+            finish()
+        }
 
 
         //Get the NAME from intent and assign it the variable
@@ -61,17 +69,17 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
-
-
     /**
      * A function for setting the question to UI components.
      */
     private fun setQuestion() {
-
+        buttonSubmit?.isClickable = false
         tvOptionOne?.isClickable = true
         tvOptionTwo?.isClickable = true
         tvOptionThree?.isClickable = true
         tvOptionFour?.isClickable = true
+
+
         val question: Question =
             mQuestionsList!![mCurrentPosition - 1] // Getting the question from the list with the help of current position.
            defaultOptionsView()
@@ -126,17 +134,18 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(view: View?) {
         when (view?.id) {
 
-
             R.id.tv_option_one -> {
             tvOptionOne?.let {
-                selectedOptionView(it, 1)
-            }
+                    selectedOptionView(it, 1)
+                    buttonSubmit?.isClickable = true
+                }
 
             }
 
             R.id.tv_option_two -> {
                 tvOptionTwo?.let {
                     selectedOptionView(it, 2)
+                    buttonSubmit?.isClickable = true
                 }
 
             }
@@ -144,6 +153,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
             R.id.tv_option_three -> {
                 tvOptionThree?.let {
                     selectedOptionView(it, 3)
+                    buttonSubmit?.isClickable = true
                 }
 
             }
@@ -151,6 +161,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
             R.id.tv_option_four -> {
                 tvOptionFour?.let {
                     selectedOptionView(it, 4)
+                    buttonSubmit?.isClickable = true
                 }
 
             }
@@ -223,7 +234,6 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
         tv.setTextColor(
             Color.parseColor("#363A43")
         )
-        tv.setTypeface(tv.typeface, Typeface.BOLD)
         tv.background = ContextCompat.getDrawable(
             this@QuizQuestionsActivity,
             R.drawable.selected_option_border_bg
